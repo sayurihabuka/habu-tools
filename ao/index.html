@@ -663,7 +663,8 @@ const DAYS = [
       {
         label: '📚 学習',
         items: [
-          { label: '最レ算数 応用C', type: 'normal', stateKey: 'saile', itemIdx: 2 },
+          { label: '最レ算数 応用C', type: 'normal', stateKey: 'saile',          itemIdx: 2 },
+          { label: '週末日記',       type: 'normal', stateKey: 'daily_sun_nikki', itemIdx: 0 },
         ]
       },
       makeEvening('sun'),
@@ -689,6 +690,7 @@ const DAILY_STATE_KEYS = [];
 ['mon','tue','wed','thu','fri','sat','sun'].forEach(dayId => {
   DAILY_KEYS.forEach(dk => DAILY_STATE_KEYS.push(`daily_${dayId}_${dk}`));
 });
+DAILY_STATE_KEYS.push('daily_sun_nikki'); // 週末日記（日曜のみ・月曜00:00リセット）
 
 
 // ===================================================
