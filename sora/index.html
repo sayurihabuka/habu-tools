@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>空の週間学習リスト</title>
+<link rel="icon" href="favicon.ico">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f2f2f7;
+    --surface: #ffffff;
+    --surface2: #f8f8fc;
+    --border: #e5e5ea;
+    --text: #1c1c1e;
+    --text-sub: #3a3a3c;
+    --text-muted: #8e8e93;
+    --radius: 6px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.04);
+    --shadow-today: 0 0 0 2.5px #3b6ef8, 0 4px 16px rgba(59,110,248,0.16);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 22px 14px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrapper {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* ===== Header ===== */
+  header {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .app-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+  header h1 {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 5px;
+  }
+  .date-display {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== Today progress ===== */
+  .today-progress {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 13px 18px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    height: 5px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b6ef8, #a855f7);
+    border-radius: 99px;
+    transition: width 0.45s ease;
+    width: 0%;
+  }
+  .progress-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-sub);
+    white-space: nowrap;
+  }
+
+  /* ===== Day card ===== */
+  .day-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .day-card.today { box-shadow: var(--shadow-today); }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    padding: 13px 16px;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    border-left: 4px solid transparent;
+  }
+
+  .day-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 36px;
+  }
+  .day-jp {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .day-en {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .day-info { flex: 1; min-width: 0; }
+  .day-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .day-event {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 1px;
+    font-weight: 400;
+  }
+
+  .today-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: white;
+    background: #3b6ef8;
+    padding: 2px 8px;
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+  .day-done-badge {
+    display: none;
+    font-size: 11px;
+    font-weight: 600;
+    color: #22c97c;
+    flex-shrink: 0;
+  }
+  .day-card.all-done .day-done-badge { display: block; }
+
+  .day-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .day-chevron {
+    font-size: 10px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .day-card.collapsed .day-chevron { transform: rotate(-90deg); }
+
+  .day-body {
+    overflow: hidden;
+    transition: max-height 0.38s cubic-bezier(.4,0,.2,1);
+    max-height: 4000px;
+  }
+  .day-card.collapsed .day-body { max-height: 0; }
+
+  /* ===== Section headers ===== */
+  /* Category: 英語(ES150) / 数学(MS180) / 毎日やること */
+  .sec-cat {
+    padding: 9px 16px 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sec-cat::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Phase: ~Before the class~ / ~After the class~ */
+  .sec-phase {
+    padding: 6px 16px 2px 18px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+    font-style: italic;
+  }
+
+  /* Group: Weekly Quiz / All-English Part / Bilingual Part */
+  .sec-group {
+    padding: 4px 16px 2px 28px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .sec-group::before {
+    content: '□';
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  /* ===== Item row ===== */
+  .item-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 16px 10px 28px;
+    gap: 11px;
+    cursor: pointer;
+    transition: background 0.1s;
+    border-top: 1px solid var(--border);
+  }
+  .item-row:hover { background: var(--surface2); }
+  .item-row.checked { background: var(--surface2); }
+
+  .custom-cb {
+    width: 20px; height: 20px;
+    border-radius: 5px;
+    border: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.18s ease;
+    background: white;
+  }
+  .item-row.checked .custom-cb { border-color: transparent; }
+  .check-icon {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.18s ease;
+    font-size: 11px;
+    color: white;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .item-row.checked .check-icon { opacity: 1; transform: scale(1); }
+
+  .item-text { flex: 1; min-width: 0; }
+  .item-label {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
+    transition: color 0.15s;
+  }
+  .item-row.checked .item-label {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+  .item-detail {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-top: 3px;
+    font-weight: 400;
+  }
+  .item-row.checked .item-detail { color: var(--border); }
+
+  /* ===== Day color themes ===== */
+  .day-mon .day-header { border-left-color: #f857a6; }
+  .day-mon .day-jp { color: #be185d; }
+  .day-mon .item-row.checked .custom-cb { background: #f857a6; }
+  .day-mon .custom-cb { border-color: #fbb6ce; }
+
+  .day-tue .day-header { border-left-color: #f97316; }
+  .day-tue .day-jp { color: #c2410c; }
+  .day-tue .item-row.checked .custom-cb { background: #f97316; }
+  .day-tue .custom-cb { border-color: #fdba74; }
+
+  .day-wed .day-header { border-left-color: #3b6ef8; }
+  .day-wed .day-jp { color: #1d4ed8; }
+  .day-wed .item-row.checked .custom-cb { background: #3b6ef8; }
+  .day-wed .custom-cb { border-color: #93c5fd; }
+
+  .day-thu .day-header { border-left-color: #22c97c; }
+  .day-thu .day-jp { color: #15803d; }
+  .day-thu .item-row.checked .custom-cb { background: #22c97c; }
+  .day-thu .custom-cb { border-color: #6ee7b7; }
+
+  .day-fri .day-header { border-left-color: #f59e0b; }
+  .day-fri .day-jp { color: #b45309; }
+  .day-fri .item-row.checked .custom-cb { background: #f59e0b; }
+  .day-fri .custom-cb { border-color: #fcd34d; }
+
+  .day-sat .day-header { border-left-color: #8b5cf6; }
+  .day-sat .day-jp { color: #6d28d9; }
+  .day-sat .item-row.checked .custom-cb { background: #8b5cf6; }
+  .day-sat .custom-cb { border-color: #c4b5fd; }
+
+  .day-sun .day-header { border-left-color: #ef4444; }
+  .day-sun .day-jp { color: #b91c1c; }
+  .day-sun .item-row.checked .custom-cb { background: #ef4444; }
+  .day-sun .custom-cb { border-color: #fca5a5; }
+
+  /* ===== Confetti ===== */
+  .confetti {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    font-size: 18px;
+    animation: drop 1.2s ease-in forwards;
+  }
+  @keyframes drop {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(80px) rotate(360deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <header>
+    <span class="app-label">Weekly Study List</span>
+    <h1>空の週間学習リスト</h1>
+    <div class="date-display" id="dateDisplay"></div>
+  </header>
+
+  <div class="today-progress">
+    <span class="progress-label">TODAY</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="overallBar"></div>
+    </div>
+    <span class="progress-count" id="overallCount">0 / 0</span>
+  </div>
+
+  <div id="daysContainer"></div>
+</div>
+
+<script type="module">
+// ===================================================
+// FIREBASE
+// ===================================================
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getDatabase, ref, set, update, onValue } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyADUL3Zu7ZkguKuz7LUSarfAj7JFkteTMw",
+  authDomain: "hahuka-tools.firebaseapp.com",
+  databaseURL: "https://hahuka-tools-default-rtdb.firebaseio.com",
+  projectId: "hahuka-tools",
+  storageBucket: "hahuka-tools.firebasestorage.app",
+  messagingSenderId: "1097903942252",
+  appId: "1:1097903942252:web:f5713546094f3b4f55c649"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const checklistRef = ref(db, 'checklist');
+
+// ===================================================
+// DATA DEFINITIONS
+// ===================================================
+
+// 英語(ES150) 共通アイテム定義
+const E = {
+  wr1:      { label: 'Words to Remember1',              detail: '単語、ノートに全部書いて覚える',                                                                                                stateKey: 'eigo', itemIdx: 0 },
+  wr2:      { label: 'Words to Remember2',              detail: '単語、ノートに全部書いて覚える',                                                                                                stateKey: 'eigo', itemIdx: 1 },
+  str:      { label: 'Sentences to Remember',           detail: '動画視聴、Repeatして音読、文章5回書く',                                                                                         stateKey: 'eigo', itemIdx: 2 },
+  raud:     { label: 'Reading Audio :: Discover Vol.◻︎ Unit◻︎', detail: 'DISCOVER SupplementsのUnit◻︎の一番最初のページを見ながら音声を聴き、DISCOVERのCHECKの問題を解く',               stateKey: 'eigo', itemIdx: 3 },
+  rvid:     { label: 'Reading Video :: Discover Vol.◻︎ Unit◻︎', detail: '動画視聴しながら、DISCOVERのWATCHの問題を解く、SHAREの問題を例文を参考にして、自分の意見を書く',               stateKey: 'eigo', itemIdx: 4 },
+  eskills:  { label: 'English Skills Unit 1-3（問題A・B・C・D）', detail: 'ノートに全文書く。問題を解く前にGrammarを視聴する',                                                               stateKey: 'eigo', itemIdx: 5 },
+  speaking: { label: 'Speaking Practice',               detail: '画面に出るお題でスピーキング練習、何回か練習してから録画、日曜日までに必ず提出',                                               stateKey: 'eigo', itemIdx: 6 },
+  reading:  { label: 'Reading Along (WATCH/READ)',       detail: 'Listen / Shadow Practice / Read の3つやる',                                                                                    stateKey: 'eigo', itemIdx: 7 },
+  grammar:  { label: 'Grammar Review',                  detail: '繰り返し取り組み、知識を定着させる',                                                                                           stateKey: 'eigo', itemIdx: 8 },
+  fukushuu: { label: '復習テストの解き直し',             detail: null,                                                                                                                           stateKey: 'eigo', itemIdx: 9 },
+};
+
+// 数学(MS180) 共通アイテム定義
+const M = {
+  rei:    { label: '例題',           detail: null, stateKey: 'suugaku', itemIdx: 0 },
+  ren:    { label: '練習問題',       detail: null, stateKey: 'suugaku', itemIdx: 1 },
+  hw:     { label: 'Homework',       detail: null, stateKey: 'suugaku', itemIdx: 2 },
+  hwnaosi:{ label: 'Homework解き直し', detail: null, stateKey: 'suugaku', itemIdx: 3 },
+};
+
+// 毎日やること アイテム生成
+function makeDaily(dayId) {
+  return [
+    { label: '日々の計算',     detail: null, stateKey: `daily_${dayId}_keisan`, itemIdx: 0 },
+    { label: '動詞の3段活用', detail: null, stateKey: `daily_${dayId}_douji`,  itemIdx: 0 },
+    { label: 'ピアノ',         detail: null, stateKey: `daily_${dayId}_piano`,  itemIdx: 0 },
+  ];
+}
+
+// 英語 Before the class（Weekly Quizのみ）
+function makeBeforeQuiz() {
+  return [
+    { type: 'phase', label: '~Before the class~' },
+    { type: 'group', label: 'Weekly Quiz' },
+    { type: 'items', items: [E.wr1, E.wr2, E.str] },
+  ];
+}
+
+// 英語 Before the class（全セクション：木曜用）
+function makeBeforeFull() {
+  return [
+    { type: 'phase', label: '~Before the class~' },
+    { type: 'group', label: 'Weekly Quiz' },
+    { type: 'items', items: [E.wr1, E.wr2, E.str] },
+    { type: 'group', label: 'All-English Part' },
+    { type: 'items', items: [E.raud, E.rvid] },
+    { type: 'group', label: 'Bilingual Part' },
+    { type: 'items', items: [E.eskills] },
+  ];
+}
+
+// 英語 After the class（スピーキングあり）
+function makeAfterFull() {
+  return [
+    { type: 'phase', label: '~After the class~' },
+    { type: 'items', items: [E.speaking, E.reading, E.grammar] },
+  ];
+}
+
+// 英語 After the class（Grammar Reviewのみ）
+function makeAfterGrammar() {
+  return [
+    { type: 'phase', label: '~After the class~' },
+    { type: 'items', items: [E.grammar] },
+  ];
+}
+
+// 英語 After the class（火曜：復習テスト解き直し + Grammar Review）
+function makeAfterTue() {
+  return [
+    { type: 'phase', label: '~After the class~' },
+    { type: 'items', items: [E.fukushuu, E.grammar] },
+  ];
+}
+
+// ===================================================
+// DAYS
+// ===================================================
+const DAYS = [
+  {
+    id: 'sun', cssClass: 'day-sun', dayIndex: 0,
+    label: '日', labelEn: 'SUN', title: '日曜日', event: '',
+    sections: [
+      { type: 'cat', label: '毎日やること' },
+      { type: 'items', items: makeDaily('sun') },
+      { type: 'cat', label: '英語（ES150）' },
+      ...makeBeforeQuiz(),
+      ...makeAfterFull(),
+    ],
+  },
+  {
+    id: 'mon', cssClass: 'day-mon', dayIndex: 1,
+    label: '月', labelEn: 'MON', title: '月曜日', event: '',
+    sections: [
+      { type: 'cat', label: '毎日やること' },
+      { type: 'items', items: makeDaily('mon') },
+      { type: 'cat', label: '英語（ES150）' },
+      ...makeBeforeQuiz(),
+      ...makeAfterGrammar(),
+      { type: 'cat', label: '数学（MS180）' },
+      { type: 'items', items: [M.hwnaosi] },
+    ],
+  },
+  {
+    id: 'tue', cssClass: 'day-tue', dayIndex: 2,
+    label: '火', labelEn: 'TUE', title: '火曜日', event: 'J PREP（英語）17:30〜20:30',
+    sections: [
+      { type: 'cat', label: '毎日やること' },
+      { type: 'items', items: makeDaily('tue') },
+      { type: 'cat', label: '英語（ES150）' },
+      ...makeBeforeQuiz(),
+      ...makeAfterTue(),
+    ],
+  },
+  {
+    id: 'wed', cssClass: 'day-wed', dayIndex: 3,
+    label: '水', labelEn: 'WED', title: '水曜日', event: 'J PREP（数学）17:30〜20:30',
+    sections: [
+      { type: 'cat', label: '毎日やること' },
+      { type: 'items', items: makeDaily('wed') },
+      { type: 'cat', label: '英語（ES150）' },
+      ...makeBeforeQuiz(),
+      ...makeAfterGrammar(),
+      { type: 'cat', label: '数学（MS180）' },
+      { type: 'items', items: [M.rei, M.ren, M.hw] },
+    ],
+  },
+  {
+    id: 'thu', cssClass: 'day-thu', dayIndex: 4,
+    label: '木', labelEn: 'THU', title: '木曜日', event: '',
+    sections: [
+      { type: 'cat', label: '毎日やること' },
+      { type: 'items', items: makeDaily('thu') },
+      { type: 'cat', label: '英語（ES150）' },
+      ...makeBeforeFull(),
+      ...makeAfterFull(),
+      { type: 'cat', label: '数学（MS180）' },
+      { type: 'items', items: [M.hw] },
+    ],
+  },
+  {
+    id: 'fri', cssClass: 'day-fri', dayIndex: 5,
+    label: '金', labelEn: 'FRI', title: '金曜日', event: '',
+    sections: [
+      { type: 'cat', label: '毎日やること' },
+      { type: 'items', items: makeDaily('fri') },
+      { type: 'cat', label: '英語（ES150）' },
+      ...makeBeforeQuiz(),
+      ...makeAfterFull(),
+      { type: 'cat', label: '数学（MS180）' },
+      { type: 'items', items: [M.hw] },
+    ],
+  },
+  {
+    id: 'sat', cssClass: 'day-sat', dayIndex: 6,
+    label: '土', labelEn: 'SAT', title: '土曜日', event: 'ピアノ 17:30〜18:00',
+    sections: [
+      { type: 'cat', label: '毎日やること' },
+      { type: 'items', items: makeDaily('sat') },
+      { type: 'cat', label: '英語（ES150）' },
+      ...makeBeforeQuiz(),
+      ...makeAfterFull(),
+    ],
+  },
+];
+
+// ===================================================
+// RESET CONFIG
+// ===================================================
+const CAT_RESET = {
+  eigo:    { day: 2, hour: 20 }, // 火曜20:00
+  suugaku: { day: 3, hour: 20 }, // 水曜20:00
+};
+const CAT_ITEM_COUNT = {
+  eigo: 10, suugaku: 4,
+};
+const DAILY_RESET = { day: 1, hour: 0 }; // 月曜00:00
+const DAILY_KEYS = ['keisan', 'douji', 'piano'];
+
+const DAILY_STATE_KEYS = [];
+['mon','tue','wed','thu','fri','sat','sun'].forEach(dayId => {
+  DAILY_KEYS.forEach(dk => DAILY_STATE_KEYS.push(`daily_${dayId}_${dk}`));
+});
+
+function getFirebaseKey(key) { return `sora_${key}`; }
+
+// ===================================================
+// STATE
+// ===================================================
+function getLastResetTs(resetCfg, now) {
+  const d = new Date(now);
+  for (let i = 0; i <= 7; i++) {
+    const c = new Date(d);
+    c.setDate(d.getDate() - i);
+    c.setHours(resetCfg.hour, 0, 0, 0);
+    if (c <= d && c.getDay() === resetCfg.day) return c.getTime();
+  }
+  return 0;
+}
+
+const catStates = {};
+const localChangeTimes = {};
+const LOCAL_GRACE_MS = 5000;
+
+function saveCatState(key, st) {
+  set(ref(db, `checklist/${getFirebaseKey(key)}`), st)
+    .catch(e => console.error('Firebase save error:', e));
+}
+
+function applyResets(firebaseData) {
+  const now = Date.now();
+  const data = firebaseData || {};
+  const batchUpdate = {};
+
+  Object.keys(CAT_RESET).forEach(catId => {
+    const fbKey = getFirebaseKey(catId);
+    let st = data[fbKey];
+    if (!st || !Array.isArray(st.checked)) {
+      st = { checked: Array(CAT_ITEM_COUNT[catId]).fill(false), lastResetTs: 0 };
+    }
+    const expectedReset = getLastResetTs(CAT_RESET[catId], now);
+    if (expectedReset > (st.lastResetTs || 0)) {
+      st = { checked: Array(CAT_ITEM_COUNT[catId]).fill(false), lastResetTs: expectedReset };
+      batchUpdate[fbKey] = st;
+    } else {
+      const recentChange = localChangeTimes[catId] && (now - localChangeTimes[catId] < LOCAL_GRACE_MS);
+      if (recentChange) return;
+    }
+    catStates[catId] = st;
+  });
+
+  DAILY_STATE_KEYS.forEach(key => {
+    const fbKey = getFirebaseKey(key);
+    let st = data[fbKey];
+    if (!st || !Array.isArray(st.checked)) {
+      st = { checked: [false], lastResetTs: 0 };
+    }
+    const expectedReset = getLastResetTs(DAILY_RESET, now);
+    if (expectedReset > (st.lastResetTs || 0)) {
+      st = { checked: [false], lastResetTs: expectedReset };
+      batchUpdate[fbKey] = st;
+    } else {
+      const recentChange = localChangeTimes[key] && (now - localChangeTimes[key] < LOCAL_GRACE_MS);
+      if (recentChange) return;
+    }
+    catStates[key] = st;
+  });
+
+  if (Object.keys(batchUpdate).length > 0) {
+    update(checklistRef, batchUpdate).catch(e => console.error('Firebase batch update error:', e));
+  }
+}
+
+function isChecked(stateKey, itemIdx) {
+  return catStates[stateKey]?.checked[itemIdx] ?? false;
+}
+
+function setChecked(stateKey, itemIdx, val) {
+  localChangeTimes[stateKey] = Date.now();
+  if (!catStates[stateKey]) catStates[stateKey] = { checked: [false], lastResetTs: 0 };
+  catStates[stateKey].checked[itemIdx] = val;
+  saveCatState(stateKey, catStates[stateKey]);
+}
+
+// ===================================================
+// BUILD UI
+// ===================================================
+function getAllItems(day) {
+  const items = [];
+  day.sections.forEach(sec => {
+    if (sec.items) sec.items.forEach(item => items.push(item));
+  });
+  return items;
+}
+
+function itemRowHTML(item, rowId) {
+  const checked = isChecked(item.stateKey, item.itemIdx);
+  const detailHTML = item.detail ? `<div class="item-detail">${item.detail}</div>` : '';
+  return `
+    <div class="item-row${checked ? ' checked' : ''}" id="${rowId}"
+         onclick="toggleItem('${rowId}', '${item.stateKey}', ${item.itemIdx})">
+      <div class="custom-cb"><span class="check-icon">✓</span></div>
+      <div class="item-text">
+        <div class="item-label">${item.label}</div>
+        ${detailHTML}
+      </div>
+    </div>`;
+}
+
+function buildDays() {
+  const container = document.getElementById('daysContainer');
+  const todayIdx = new Date().getDay();
+  container.innerHTML = '';
+
+  DAYS.forEach(day => {
+    const isToday = day.dayIndex === todayIdx;
+    const allItems = getAllItems(day);
+    const total = allItems.length;
+
+    // Build sections HTML
+    let bodyHTML = '';
+    let itemCounter = 0;
+    day.sections.forEach(sec => {
+      if (sec.type === 'cat') {
+        bodyHTML += `<div class="sec-cat">${sec.label}</div>`;
+      } else if (sec.type === 'phase') {
+        bodyHTML += `<div class="sec-phase">${sec.label}</div>`;
+      } else if (sec.type === 'group') {
+        bodyHTML += `<div class="sec-group">${sec.label}</div>`;
+      } else if (sec.type === 'items') {
+        sec.items.forEach(item => {
+          const rowId = `row-${day.id}-${itemCounter++}`;
+          bodyHTML += itemRowHTML(item, rowId);
+        });
+      }
+    });
+
+    const card = document.createElement('div');
+    card.className = `day-card ${day.cssClass}${isToday ? ' today' : ''}`;
+    card.id = `day-${day.id}`;
+
+    const eventHTML = day.event ? `<div class="day-event">${day.event}</div>` : '';
+    const todayTagHTML = isToday ? `<span class="today-tag">TODAY</span>` : '';
+
+    card.innerHTML = `
+      <div class="day-header" onclick="toggleDay('${day.id}')">
+        <div class="day-indicator">
+          <span class="day-jp">${day.label}</span>
+          <span class="day-en">${day.labelEn}</span>
+        </div>
+        <div class="day-info">
+          <div class="day-title">${day.title}</div>
+          ${eventHTML}
+        </div>
+        ${todayTagHTML}
+        <span class="day-done-badge" id="done-${day.id}">✓ 完了</span>
+        <span class="day-count" id="cnt-${day.id}">0/${total}</span>
+        <span class="day-chevron">▼</span>
+      </div>
+      <div class="day-body" id="body-${day.id}">
+        ${bodyHTML}
+      </div>`;
+
+    if (!isToday) card.classList.add('collapsed');
+    container.appendChild(card);
+  });
+}
+
+// ===================================================
+// TOGGLE
+// ===================================================
+function toggleDay(dayId) {
+  document.getElementById(`day-${dayId}`).classList.toggle('collapsed');
+}
+
+function toggleItem(rowId, stateKey, itemIdx) {
+  const cur = isChecked(stateKey, itemIdx);
+  setChecked(stateKey, itemIdx, !cur);
+  const row = document.getElementById(rowId);
+  if (!cur) { row.classList.add('checked'); spawnConfetti(); }
+  else row.classList.remove('checked');
+  updateDayProgress();
+  updateOverall();
+}
+
+window.toggleDay = toggleDay;
+window.toggleItem = toggleItem;
+
+// ===================================================
+// PROGRESS
+// ===================================================
+function updateDayProgress() {
+  DAYS.forEach(day => {
+    const items = getAllItems(day);
+    const total = items.length;
+    const done = items.filter(item => isChecked(item.stateKey, item.itemIdx)).length;
+    document.getElementById(`cnt-${day.id}`).textContent = `${done}/${total}`;
+    const card = document.getElementById(`day-${day.id}`);
+    if (done === total) card.classList.add('all-done');
+    else card.classList.remove('all-done');
+  });
+}
+
+function updateOverall() {
+  const todayIdx = new Date().getDay();
+  const todayDay = DAYS.find(d => d.dayIndex === todayIdx);
+  let total = 0, done = 0;
+  if (todayDay) {
+    const items = getAllItems(todayDay);
+    total = items.length;
+    done = items.filter(item => isChecked(item.stateKey, item.itemIdx)).length;
+  }
+  document.getElementById('overallBar').style.width = total ? `${(done / total * 100).toFixed(1)}%` : '0%';
+  document.getElementById('overallCount').textContent = `${done} / ${total}`;
+}
+
+// ===================================================
+// AUTO RESET
+// ===================================================
+function checkResets() {
+  const now = Date.now();
+  let needsRebuild = false;
+  const batchUpdate = {};
+
+  Object.keys(CAT_RESET).forEach(catId => {
+    const st = catStates[catId];
+    if (!st) return;
+    const expected = getLastResetTs(CAT_RESET[catId], now);
+    if (expected > (st.lastResetTs || 0)) {
+      catStates[catId] = { checked: Array(CAT_ITEM_COUNT[catId]).fill(false), lastResetTs: expected };
+      batchUpdate[getFirebaseKey(catId)] = catStates[catId];
+      needsRebuild = true;
+    }
+  });
+
+  DAILY_STATE_KEYS.forEach(key => {
+    const st = catStates[key] || { checked: [false], lastResetTs: 0 };
+    const expected = getLastResetTs(DAILY_RESET, now);
+    if (expected > (st.lastResetTs || 0)) {
+      catStates[key] = { checked: [false], lastResetTs: expected };
+      batchUpdate[getFirebaseKey(key)] = catStates[key];
+      needsRebuild = true;
+    }
+  });
+
+  if (Object.keys(batchUpdate).length > 0) {
+    update(checklistRef, batchUpdate).catch(e => console.error(e));
+  }
+  if (needsRebuild) {
+    rebuildAllRows();
+    updateDayProgress();
+    updateOverall();
+  }
+}
+
+function rebuildAllRows() {
+  DAYS.forEach(day => {
+    let itemCounter = 0;
+    day.sections.forEach(sec => {
+      if (sec.type === 'items') {
+        sec.items.forEach(item => {
+          const row = document.getElementById(`row-${day.id}-${itemCounter++}`);
+          if (row) {
+            isChecked(item.stateKey, item.itemIdx)
+              ? row.classList.add('checked')
+              : row.classList.remove('checked');
+          }
+        });
+      } else if (sec.type !== 'items') {
+        // header sections have no rows
+      }
+    });
+  });
+}
+
+// ===================================================
+// CONFETTI & DATE
+// ===================================================
+function spawnConfetti() {
+  const emojis = ['✨','⭐','🌟','💫','🎉','🎊'];
+  for (let i = 0; i < 5; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = (20 + Math.random() * 60) + 'vw';
+    el.style.top = (Math.random() * 40 + 20) + 'vh';
+    el.style.animationDelay = (Math.random() * 0.4) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1600);
+  }
+}
+
+function updateDate() {
+  const now = new Date();
+  const days = ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'];
+  document.getElementById('dateDisplay').textContent =
+    `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${days[now.getDay()]}`;
+}
+
+// ===================================================
+// INIT
+// ===================================================
+updateDate();
+setInterval(checkResets, 60000);
+setInterval(updateDate, 60000);
+
+let uiBuilt = false;
+onValue(checklistRef, snapshot => {
+  applyResets(snapshot.val());
+  if (!uiBuilt) {
+    buildDays();
+    uiBuilt = true;
+  } else {
+    rebuildAllRows();
+  }
+  updateDayProgress();
+  updateOverall();
+}, error => {
+  console.error('Firebase onValue error:', error);
+  if (!uiBuilt) {
+    buildDays();
+    uiBuilt = true;
+    updateDayProgress();
+    updateOverall();
+  }
+});
+</script>
+</body>
+</html>
