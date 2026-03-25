@@ -279,6 +279,8 @@
     text-decoration: line-through;
     color: var(--text-muted);
   }
+  .item-label-blue { color: #1d4ed8; font-weight: 600; }
+  .item-row.checked .item-label-blue { color: var(--text-muted); }
   .item-detail {
     font-size: 11px;
     color: var(--text-muted);
@@ -401,7 +403,7 @@ const M = {
   rei:    { label: '例題',           detail: null, stateKey: 'suugaku', itemIdx: 0 },
   ren:    { label: '練習問題',       detail: null, stateKey: 'suugaku', itemIdx: 1 },
   hw:     { label: 'Homework',       detail: null, stateKey: 'suugaku', itemIdx: 2 },
-  hwnaosi:{ label: 'Homework解き直し', detail: null, stateKey: 'suugaku', itemIdx: 3 },
+  hwnaosi:{ label: 'Homework 解き直し', detail: null, stateKey: 'suugaku', itemIdx: 3, color: 'blue' },
 };
 
 // 毎日やること アイテム生成
@@ -662,12 +664,13 @@ function getAllItems(day) {
 function itemRowHTML(item, rowId) {
   const checked = isChecked(item.stateKey, item.itemIdx);
   const detailHTML = item.detail ? `<div class="item-detail">${item.detail}</div>` : '';
+  const labelClass = item.color === 'blue' ? 'item-label item-label-blue' : 'item-label';
   return `
     <div class="item-row${checked ? ' checked' : ''}" id="${rowId}"
          onclick="toggleItem('${rowId}', '${item.stateKey}', ${item.itemIdx})">
       <div class="custom-cb"><span class="check-icon">✓</span></div>
       <div class="item-text">
-        <div class="item-label">${item.label}</div>
+        <div class="${labelClass}">${item.label}</div>
         ${detailHTML}
       </div>
     </div>`;
