@@ -415,49 +415,54 @@ function makeDaily(dayId) {
   ];
 }
 
+// 英語アイテムを曜日別stateKeyで生成
+function e(key, dayId) { return { ...E[key], stateKey: `eigo_${dayId}` }; }
+// 数学アイテムを曜日別stateKeyで生成
+function m(key, dayId) { return { ...M[key], stateKey: `suugaku_${dayId}` }; }
+
 // 英語 Before the class（Weekly Quizのみ）
-function makeBeforeQuiz() {
+function makeBeforeQuiz(dayId) {
   return [
     { type: 'phase', label: '~Before the class~' },
     { type: 'group', label: 'Weekly Quiz' },
-    { type: 'items', items: [E.wr1, E.wr2, E.str] },
+    { type: 'items', items: [e('wr1', dayId), e('wr2', dayId), e('str', dayId)] },
   ];
 }
 
 // 英語 Before the class（全セクション：木曜用）
-function makeBeforeFull() {
+function makeBeforeFull(dayId) {
   return [
     { type: 'phase', label: '~Before the class~' },
     { type: 'group', label: 'Weekly Quiz' },
-    { type: 'items', items: [E.wr1, E.wr2, E.str] },
+    { type: 'items', items: [e('wr1', dayId), e('wr2', dayId), e('str', dayId)] },
     { type: 'group', label: 'All-English Part' },
-    { type: 'items', items: [E.raud, E.rvid] },
+    { type: 'items', items: [e('raud', dayId), e('rvid', dayId)] },
     { type: 'group', label: 'Bilingual Part' },
-    { type: 'items', items: [E.eskills] },
+    { type: 'items', items: [e('eskills', dayId)] },
   ];
 }
 
 // 英語 After the class（スピーキングあり）
-function makeAfterFull() {
+function makeAfterFull(dayId) {
   return [
     { type: 'phase', label: '~After the class~' },
-    { type: 'items', items: [E.speaking, E.reading, E.grammar] },
+    { type: 'items', items: [e('speaking', dayId), e('reading', dayId), e('grammar', dayId)] },
   ];
 }
 
 // 英語 After the class（Grammar Reviewのみ）
-function makeAfterGrammar() {
+function makeAfterGrammar(dayId) {
   return [
     { type: 'phase', label: '~After the class~' },
-    { type: 'items', items: [E.grammar] },
+    { type: 'items', items: [e('grammar', dayId)] },
   ];
 }
 
 // 英語 After the class（火曜：復習テスト解き直し + Grammar Review）
-function makeAfterTue() {
+function makeAfterTue(dayId) {
   return [
     { type: 'phase', label: '~After the class~' },
-    { type: 'items', items: [E.fukushuu, E.grammar] },
+    { type: 'items', items: [e('fukushuu', dayId), e('grammar', dayId)] },
   ];
 }
 
@@ -472,8 +477,8 @@ const DAYS = [
       { type: 'cat', label: '毎日やること' },
       { type: 'items', items: makeDaily('sun') },
       { type: 'cat', label: '英語（ES150）' },
-      ...makeBeforeQuiz(),
-      ...makeAfterFull(),
+      ...makeBeforeQuiz('sun'),
+      ...makeAfterFull('sun'),
     ],
   },
   {
@@ -483,10 +488,10 @@ const DAYS = [
       { type: 'cat', label: '毎日やること' },
       { type: 'items', items: makeDaily('mon') },
       { type: 'cat', label: '英語（ES150）' },
-      ...makeBeforeQuiz(),
-      ...makeAfterGrammar(),
+      ...makeBeforeQuiz('mon'),
+      ...makeAfterGrammar('mon'),
       { type: 'cat', label: '数学（MS180）' },
-      { type: 'items', items: [M.hwnaosi] },
+      { type: 'items', items: [m('hwnaosi', 'mon')] },
     ],
   },
   {
@@ -496,8 +501,8 @@ const DAYS = [
       { type: 'cat', label: '毎日やること' },
       { type: 'items', items: makeDaily('tue') },
       { type: 'cat', label: '英語（ES150）' },
-      ...makeBeforeQuiz(),
-      ...makeAfterTue(),
+      ...makeBeforeQuiz('tue'),
+      ...makeAfterTue('tue'),
     ],
   },
   {
@@ -507,10 +512,10 @@ const DAYS = [
       { type: 'cat', label: '毎日やること' },
       { type: 'items', items: makeDaily('wed') },
       { type: 'cat', label: '英語（ES150）' },
-      ...makeBeforeQuiz(),
-      ...makeAfterGrammar(),
+      ...makeBeforeQuiz('wed'),
+      ...makeAfterGrammar('wed'),
       { type: 'cat', label: '数学（MS180）' },
-      { type: 'items', items: [M.rei, M.ren, M.hw] },
+      { type: 'items', items: [m('rei', 'wed'), m('ren', 'wed'), m('hw', 'wed')] },
     ],
   },
   {
@@ -520,10 +525,10 @@ const DAYS = [
       { type: 'cat', label: '毎日やること' },
       { type: 'items', items: makeDaily('thu') },
       { type: 'cat', label: '英語（ES150）' },
-      ...makeBeforeFull(),
-      ...makeAfterFull(),
+      ...makeBeforeFull('thu'),
+      ...makeAfterFull('thu'),
       { type: 'cat', label: '数学（MS180）' },
-      { type: 'items', items: [M.hw] },
+      { type: 'items', items: [m('hw', 'thu')] },
     ],
   },
   {
@@ -533,10 +538,10 @@ const DAYS = [
       { type: 'cat', label: '毎日やること' },
       { type: 'items', items: makeDaily('fri') },
       { type: 'cat', label: '英語（ES150）' },
-      ...makeBeforeQuiz(),
-      ...makeAfterFull(),
+      ...makeBeforeQuiz('fri'),
+      ...makeAfterFull('fri'),
       { type: 'cat', label: '数学（MS180）' },
-      { type: 'items', items: [M.hw] },
+      { type: 'items', items: [m('hw', 'fri')] },
     ],
   },
   {
@@ -546,8 +551,8 @@ const DAYS = [
       { type: 'cat', label: '毎日やること' },
       { type: 'items', items: makeDaily('sat') },
       { type: 'cat', label: '英語（ES150）' },
-      ...makeBeforeQuiz(),
-      ...makeAfterFull(),
+      ...makeBeforeQuiz('sat'),
+      ...makeAfterFull('sat'),
     ],
   },
 ];
@@ -555,13 +560,15 @@ const DAYS = [
 // ===================================================
 // RESET CONFIG
 // ===================================================
-const CAT_RESET = {
-  eigo:    { day: 2, hour: 20 }, // 火曜20:00
-  suugaku: { day: 3, hour: 20 }, // 水曜20:00
-};
-const CAT_ITEM_COUNT = {
-  eigo: 10, suugaku: 4,
-};
+// 英語・数学は曜日ごとに独立したstateKey
+const CAT_RESET = {};
+const CAT_ITEM_COUNT = {};
+['mon','tue','wed','thu','fri','sat','sun'].forEach(dayId => {
+  CAT_RESET[`eigo_${dayId}`]    = { day: 2, hour: 20 }; // 火曜20:00
+  CAT_RESET[`suugaku_${dayId}`] = { day: 3, hour: 20 }; // 水曜20:00
+  CAT_ITEM_COUNT[`eigo_${dayId}`]    = 10;
+  CAT_ITEM_COUNT[`suugaku_${dayId}`] = 4;
+});
 const DAILY_RESET = { day: 1, hour: 0 }; // 月曜00:00
 const DAILY_KEYS = ['keisan', 'douji', 'piano'];
 
