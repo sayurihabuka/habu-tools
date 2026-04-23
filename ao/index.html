@@ -498,15 +498,16 @@ const checklistRef = ref(db, 'checklist');
 // DATA
 // ===================================================
 
-const DAILY_KEYS = ['piano', 'keisan', 'goi', 'kumon'];
+const DAILY_KEYS = ['piano', 'keisan', 'goi', 'kumon', 'anki'];
 const DAILY_RESET = { day: 1, hour: 0 }; // 月曜00:00
 
 function makeMorning(dayId) {
   return {
     label: '☀️ 毎朝',
     items: [
-      { label: '日々計算',      type: 'normal', stateKey: `daily_${dayId}_keisan`, itemIdx: 0 },
-      { label: '語彙力UP 1300', type: 'normal', stateKey: `daily_${dayId}_goi`,    itemIdx: 0 },
+      { label: '日々計算',            type: 'normal', stateKey: `daily_${dayId}_keisan`, itemIdx: 0 },
+      { label: '語彙力UP 1300',      type: 'normal', stateKey: `daily_${dayId}_goi`,    itemIdx: 0 },
+      { label: 'タブレットでAnkiをやる', type: 'normal', stateKey: `daily_${dayId}_anki`,   itemIdx: 0 },
     ]
   };
 }
