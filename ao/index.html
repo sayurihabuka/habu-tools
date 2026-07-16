@@ -498,7 +498,7 @@ const checklistRef = ref(db, 'checklist');
 // DATA
 // ===================================================
 
-const DAILY_KEYS = ['piano', 'keisan', 'goi', 'kumon', 'anki'];
+const DAILY_KEYS = ['piano', 'keisan', 'goi', 'kumon', 'anki', 'dokusho'];
 const DAILY_RESET = { day: 1, hour: 0 }; // 月曜00:00
 
 function makeMorning(dayId) {
@@ -515,8 +515,9 @@ function makeEvening(dayId) {
   return {
     label: '🌙 毎日',
     items: [
-      { label: 'ピアノ', type: 'normal', stateKey: `daily_${dayId}_piano`, itemIdx: 0 },
-      { label: '公文',   type: 'normal', stateKey: `daily_${dayId}_kumon`, itemIdx: 0 },
+      { label: 'ピアノ', type: 'normal', stateKey: `daily_${dayId}_piano`,   itemIdx: 0 },
+      { label: '公文',   type: 'normal', stateKey: `daily_${dayId}_kumon`,   itemIdx: 0 },
+      { label: '読書',   type: 'normal', stateKey: `daily_${dayId}_dokusho`, itemIdx: 0 },
     ]
   };
 }
