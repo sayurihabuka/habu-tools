@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>青の夏休み学習リスト 2026</title>
+<link rel="icon" href="favicon.ico">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface2: #f8faff;
+    --border: #e2e8f8;
+    --text: #1a1f3c;
+    --text-muted: #6b7499;
+    --accent-blue: #3b6ef8;
+    --accent-blue-light: #dce8ff;
+    --accent-pink: #f857a6;
+    --accent-pink-light: #ffe0f3;
+    --accent-green: #22c97c;
+    --accent-green-light: #d4f7e8;
+    --accent-amber: #f59e0b;
+    --accent-amber-light: #fef3c7;
+    --accent-purple: #8b5cf6;
+    --accent-purple-light: #ede9fe;
+    --accent-teal: #0ea5e9;
+    --accent-teal-light: #e0f5ff;
+    --accent-orange: #f97316;
+    --accent-orange-light: #fff0e6;
+    --shadow: 0 2px 12px rgba(59,110,248,0.08);
+    --shadow-hover: 0 6px 24px rgba(59,110,248,0.16);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 16px 80px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -120px; left: -120px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,110,248,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -100px; right: -100px;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(248,87,166,0.10) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    max-width: 520px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--accent-blue);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-family: 'DM Mono', monospace;
+  }
+  header h1 {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .date-display {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* Overall progress */
+  .overall-progress {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    height: 10px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+  .progress-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-blue);
+    white-space: nowrap;
+  }
+
+  /* ===== 毎朝 fixed card ===== */
+  .mainichi-card {
+    background: linear-gradient(135deg, #fffbe6 0%, #fff0fa 100%);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 2px solid #ffe58a;
+  }
+  .mainichi-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .mainichi-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: #fff8cc;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .mainichi-title {
+    flex: 1;
+  }
+  .mainichi-title h2 {
+    font-size: 15px;
+    font-weight: 900;
+    color: #c47a00;
+  }
+  .mainichi-sub {
+    font-size: 10px;
+    color: #c47a00;
+    opacity: 0.7;
+    font-family: 'DM Mono', monospace;
+    margin-top: 2px;
+  }
+  .mainichi-mini {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #fff3b0;
+    color: #c47a00;
+    flex-shrink: 0;
+  }
+  .mainichi-chevron {
+    font-size: 12px;
+    color: #c47a00;
+    opacity: 0.6;
+    transition: transform 0.2s;
+  }
+  .mainichi-card.collapsed .mainichi-chevron { transform: rotate(-90deg); }
+  .mainichi-list {
+    border-top: 1px solid #ffe58a;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(.4,0,.2,1);
+    max-height: 600px;
+  }
+  .mainichi-card.collapsed .mainichi-list { max-height: 0; border-top: none; }
+  .mainichi-card .item-row.checked .custom-cb { background: var(--accent-amber); }
+  .mainichi-card .custom-cb { border-color: #ffe58a; }
+
+  /* ===== Day accordion ===== */
+  .day-section {
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .day-section:hover { box-shadow: var(--shadow-hover); }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    border-left: 5px solid transparent;
+  }
+
+  .day-badge {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .day-badge .day-jp { font-size: 16px; }
+  .day-badge .day-sub { font-size: 8px; font-family: 'DM Mono', monospace; opacity: 0.7; margin-top: 1px; }
+
+  .day-title-wrap { flex: 1; }
+  .day-title-wrap h2 { font-size: 15px; font-weight: 900; }
+  .day-subtitle { font-size: 11px; margin-top: 2px; opacity: 0.75; font-weight: 500; }
+
+  .day-progress-mini {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .day-done-badge {
+    display: none;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--accent-green-light);
+    color: var(--accent-green);
+  }
+  .day-section.all-done .day-done-badge { display: inline-flex; align-items: center; gap: 3px; }
+
+  .day-chevron {
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .day-section.collapsed .day-chevron { transform: rotate(-90deg); }
+
+  .day-items {
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.4,0,.2,1);
+    max-height: 2000px;
+  }
+  .day-section.collapsed .day-items { max-height: 0; }
+
+  /* Sub-section (午前/午後) */
+  .sub-section-label {
+    padding: 7px 18px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    border-bottom: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Item row */
+  .item-row {
+    display: flex;
+    align-items: center;
+    padding: 11px 18px 11px 40px;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .item-row:last-child { border-bottom: none; }
+  .item-row:hover { background: var(--surface2); }
+  .item-row.checked { background: var(--surface2); }
+
+  .custom-cb {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s cubic-bezier(.4,0,.2,1);
+    background: white;
+  }
+  .item-row.checked .custom-cb { border-color: transparent; }
+  .custom-cb .check-icon {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s cubic-bezier(.4,0,.2,1);
+    font-size: 13px;
+    color: white;
+    font-weight: 700;
+  }
+  .item-row.checked .custom-cb .check-icon { opacity: 1; transform: scale(1); }
+
+  .item-label {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+  .item-row.checked .item-label { text-decoration: line-through; color: var(--text-muted); }
+  .item-label.type-red { color: #e53935; font-weight: 700; }
+  .item-label.type-blue { color: #1565c0; font-weight: 700; }
+  .item-row.checked .item-label.type-red,
+  .item-row.checked .item-label.type-blue { color: var(--text-muted); }
+
+  .item-type-badge {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    letter-spacing: 0.03em;
+  }
+  .item-type-badge.badge-red { background: #fde8e8; color: #e53935; border: 1.5px solid #f8a8a8; }
+  .item-type-badge.badge-blue { background: #e3eeff; color: #1565c0; border: 1.5px solid #90b4f8; }
+  .item-row.checked .item-type-badge { opacity: 0.4; }
+
+  /* Day color themes */
+  /* 月 ピンク */
+  .day-mon { background: #ffffff; }
+  .day-mon .day-header { border-left-color: #f857a6; background: #ffffff; }
+  .day-mon .day-badge { background: #ffe0f3; color: #f857a6; }
+  .day-mon .day-title-wrap h2 { color: #be185d; }
+  .day-mon .day-subtitle { color: #f857a6; }
+  .day-mon .day-progress-mini { background: #ffe0f3; color: #be185d; }
+  .day-mon .item-row.checked .custom-cb { background: #f857a6; }
+  .day-mon .custom-cb { border-color: #f9a8d4; }
+
+  /* 火 オレンジ */
+  .day-tue { background: #ffffff; }
+  .day-tue .day-header { border-left-color: #f97316; background: #ffffff; }
+  .day-tue .day-badge { background: #fff0e6; color: #f97316; }
+  .day-tue .day-title-wrap h2 { color: #c2410c; }
+  .day-tue .day-subtitle { color: #f97316; }
+  .day-tue .day-progress-mini { background: #fff0e6; color: #c2410c; }
+  .day-tue .item-row.checked .custom-cb { background: #f97316; }
+  .day-tue .custom-cb { border-color: #fdba74; }
+
+  /* 水 ブルー */
+  .day-wed { background: #ffffff; }
+  .day-wed .day-header { border-left-color: #3b6ef8; background: #ffffff; }
+  .day-wed .day-badge { background: #dce8ff; color: #3b6ef8; }
+  .day-wed .day-title-wrap h2 { color: #1d4ed8; }
+  .day-wed .day-subtitle { color: #3b6ef8; }
+  .day-wed .day-progress-mini { background: #dce8ff; color: #1d4ed8; }
+  .day-wed .item-row.checked .custom-cb { background: #3b6ef8; }
+  .day-wed .custom-cb { border-color: #93c5fd; }
+
+  /* 木 グリーン */
+  .day-thu { background: #ffffff; }
+  .day-thu .day-header { border-left-color: #22c97c; background: #ffffff; }
+  .day-thu .day-badge { background: #d4f7e8; color: #22c97c; }
+  .day-thu .day-title-wrap h2 { color: #15803d; }
+  .day-thu .day-subtitle { color: #22c97c; }
+  .day-thu .day-progress-mini { background: #d4f7e8; color: #15803d; }
+  .day-thu .item-row.checked .custom-cb { background: #22c97c; }
+  .day-thu .custom-cb { border-color: #6ee7b7; }
+
+  /* 金 黄色 */
+  .day-fri { background: #ffffff; }
+  .day-fri .day-header { border-left-color: #f59e0b; background: #ffffff; }
+  .day-fri .day-badge { background: #fef3c7; color: #f59e0b; }
+  .day-fri .day-title-wrap h2 { color: #b45309; }
+  .day-fri .day-subtitle { color: #f59e0b; }
+  .day-fri .day-progress-mini { background: #fef3c7; color: #b45309; }
+  .day-fri .item-row.checked .custom-cb { background: #f59e0b; }
+  .day-fri .custom-cb { border-color: #fcd34d; }
+
+  /* 土 紫 */
+  .day-sat { background: #ffffff; }
+  .day-sat .day-header { border-left-color: #8b5cf6; background: #ffffff; }
+  .day-sat .day-badge { background: #ede9fe; color: #8b5cf6; }
+  .day-sat .day-title-wrap h2 { color: #6d28d9; }
+  .day-sat .day-subtitle { color: #8b5cf6; }
+  .day-sat .day-progress-mini { background: #ede9fe; color: #6d28d9; }
+  .day-sat .item-row.checked .custom-cb { background: #8b5cf6; }
+  .day-sat .custom-cb { border-color: #c4b5fd; }
+  .day-sat .sub-section-label { color: #8b5cf6; }
+
+  /* 日 赤 */
+  .day-sun { background: #ffffff; }
+  .day-sun .day-header { border-left-color: #ef4444; background: #ffffff; }
+  .day-sun .day-badge { background: #fee2e2; color: #ef4444; }
+  .day-sun .day-title-wrap h2 { color: #b91c1c; }
+  .day-sun .day-subtitle { color: #ef4444; }
+  .day-sun .day-progress-mini { background: #fee2e2; color: #b91c1c; }
+  .day-sun .item-row.checked .custom-cb { background: #ef4444; }
+  .day-sun .custom-cb { border-color: #fca5a5; }
+
+  /* Today highlight */
+  .day-section.today {
+    box-shadow: 0 0 0 3px rgba(59,110,248,0.35), var(--shadow-hover);
+  }
+  .today-tag {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: var(--accent-blue);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  /* ===== 夏期講習期間カード ===== */
+  .summer-card {
+    background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 2px solid #fed7aa;
+  }
+  .summer-card-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .summer-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: #ffedd5;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .summer-card-title {
+    flex: 1;
+  }
+  .summer-card-title h2 {
+    font-size: 15px;
+    font-weight: 900;
+    color: #c2410c;
+  }
+  .summer-card-period {
+    font-size: 11px;
+    color: #ea580c;
+    font-family: 'DM Mono', monospace;
+    margin-top: 2px;
+  }
+  .summer-card-chevron {
+    font-size: 12px;
+    color: #ea580c;
+    opacity: 0.7;
+    transition: transform 0.2s;
+  }
+  .summer-card.collapsed .summer-card-chevron { transform: rotate(-90deg); }
+  .summer-card-body {
+    border-top: 1px solid #fed7aa;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(.4,0,.2,1);
+    max-height: 1000px;
+  }
+  .summer-card.collapsed .summer-card-body { max-height: 0; border-top: none; }
+  .summer-card .item-row.checked .custom-cb { background: #f97316; }
+  .summer-card .custom-cb { border-color: #fed7aa; }
+
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    font-size: 20px;
+    animation: confettiDrop 1.2s ease-in forwards;
+  }
+  @keyframes confettiDrop {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(80px) rotate(360deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <header>
+    <div class="header-badge">SUMMER 2026</div>
+    <h1>🌻 青の夏休み学習リスト</h1>
+    <div class="date-display" id="dateDisplay"></div>
+  </header>
+
+  <div class="overall-progress">
+    <span class="progress-label">TODAY</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="overallBar"></div>
+    </div>
+    <span class="progress-count" id="overallCount">0 / 0</span>
+  </div>
+
+  <!-- 夏期講習期間 -->
+  <div class="summer-card" id="summerCard">
+    <div class="summer-card-header" onclick="toggleSummerCard()">
+      <div class="summer-card-icon">🏫</div>
+      <div class="summer-card-title">
+        <h2>夏期講習期間</h2>
+        <div class="summer-card-period">7/29〜8/4</div>
+      </div>
+      <span class="summer-card-chevron">▼</span>
+    </div>
+    <div class="summer-card-body" id="summerCardBody">
+    </div>
+  </div>
+
+  <!-- 曜日別セクション -->
+  <div id="daysContainer"></div>
+</div>
+
+<script type="module">
+// ===================================================
+// FIREBASE
+// ===================================================
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getDatabase, ref, set, update, onValue } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyADUL3Zu7ZkguKuz7LUSarfAj7JFkteTMw",
+  authDomain: "hahuka-tools.firebaseapp.com",
+  databaseURL: "https://hahuka-tools-default-rtdb.firebaseio.com",
+  projectId: "hahuka-tools",
+  storageBucket: "hahuka-tools.firebasestorage.app",
+  messagingSenderId: "1097903942252",
+  appId: "1:1097903942252:web:f5713546094f3b4f55c649"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const checklistRef = ref(db, 'checklist');
+
+// ===================================================
+// DATA
+// ===================================================
+
+const DAILY_KEYS = ['piano', 'keisan', 'goi', 'kumon', 'anki', 'dokusho', 'kanji_tr', 'donguri', 'dokkai', 'todofuken'];
+const DAILY_RESET = { day: 1, hour: 0 }; // 月曜00:00
+
+function makeMorning(dayId) {
+  return {
+    label: '☀️ 毎朝',
+    items: [
+      { label: '日々計算',            type: 'normal', stateKey: `daily_${dayId}_keisan`, itemIdx: 0 },
+      { label: '語彙力UP 1300',      type: 'normal', stateKey: `daily_${dayId}_goi`,    itemIdx: 0 },
+      { label: 'タブレットでAnkiをやる', type: 'normal', stateKey: `daily_${dayId}_anki`,   itemIdx: 0 },
+    ]
+  };
+}
+function makeAfternoon(dayId) {
+  return {
+    label: '🌙 午後',
+    items: [
+      { label: '漢字トレーニング',         type: 'normal', stateKey: `daily_${dayId}_kanji_tr`, itemIdx: 0 },
+      { label: 'どんぐり先生',             type: 'normal', stateKey: `daily_${dayId}_donguri`,  itemIdx: 0 },
+      { label: '国語読解力トレーニング',   type: 'normal', stateKey: `daily_${dayId}_dokkai`,   itemIdx: 0 },
+    ]
+  };
+}
+function makeEvening(dayId) {
+  return {
+    label: '🌼 毎日',
+    items: [
+      { label: 'ピアノ', type: 'normal', stateKey: `daily_${dayId}_piano`,   itemIdx: 0 },
+      { label: '公文',   type: 'normal', stateKey: `daily_${dayId}_kumon`,   itemIdx: 0 },
+      { label: '読書',   type: 'normal', stateKey: `daily_${dayId}_dokusho`, itemIdx: 0 },
+    ]
+  };
+}
+
+// 曜日別データ
+const DAYS = [
+  {
+    id: 'mon',
+    cssClass: 'day-mon',
+    dayIndex: 1,
+    label: '月', labelEn: 'MON',
+    title: '月曜日',
+    subtitle: '',
+    sections: [
+      makeMorning('mon'),
+      {
+        label: '🌞 午前中',
+        items: [
+          { label: '最レ算数 解き直し',                    type: 'red',    stateKey: 'saile',  itemIdx: 3 },
+          { label: '漢字・四字熟語/ことわざ/慣用句　確認', type: 'blue',   stateKey: 'kokugo',             itemIdx: 7 },
+          { label: '英語 レッスン宿題',                    type: 'normal', stateKey: 'eigo',               itemIdx: 0 },
+          { label: '英語 書き取り宿題',                    type: 'normal', stateKey: 'eigo',               itemIdx: 1 },
+          { label: '都道府県',                             type: 'normal', stateKey: 'daily_mon_todofuken', itemIdx: 0 },
+        ]
+      },
+      makeAfternoon('mon'),
+      makeEvening('mon'),
+    ]
+  },
+  {
+    id: 'tue',
+    cssClass: 'day-tue',
+    dayIndex: 2,
+    label: '火', labelEn: 'TUE',
+    title: '火曜日',
+    subtitle: '公文',
+    sections: [
+      makeMorning('tue'),
+      {
+        label: '🌞 午前中',
+        items: [
+          { label: 'ベーシック算数 確認', type: 'blue',   stateKey: 'sansu',             itemIdx: 4 },
+          { label: '英語 レッスン予習',   type: 'normal', stateKey: 'eigo',              itemIdx: 2 },
+          { label: '都道府県',            type: 'normal', stateKey: 'daily_tue_todofuken', itemIdx: 0 },
+        ]
+      },
+      makeAfternoon('tue'),
+      makeEvening('tue'),
+    ]
+  },
+  {
+    id: 'wed',
+    cssClass: 'day-wed',
+    dayIndex: 3,
+    label: '水', labelEn: 'WED',
+    title: '水曜日',
+    subtitle: '希ベーシック',
+    sections: [
+      makeMorning('wed'),
+      {
+        label: '🌞 午前中',
+        items: [
+          { label: '漢字トレーニング',       type: 'normal', stateKey: 'daily_wed_kanji_tr', itemIdx: 0 },
+          { label: 'どんぐり先生',           type: 'normal', stateKey: 'daily_wed_donguri',  itemIdx: 0 },
+          { label: '国語読解力トレーニング', type: 'normal', stateKey: 'daily_wed_dokkai',   itemIdx: 0 },
+        ]
+      },
+      {
+        label: '🌙 午後',
+        items: [
+          { label: '英語 予習',                 type: 'normal', stateKey: 'eigo',  itemIdx: 3 },
+          { label: 'ベーシック算数 基礎A',      type: 'normal', stateKey: 'sansu', itemIdx: 0 },
+          { label: 'ベーシック算数 応用B',      type: 'normal', stateKey: 'sansu', itemIdx: 1 },
+          { label: 'ベーシック算数 復習テスト', type: 'normal', stateKey: 'sansu', itemIdx: 2 },
+        ]
+      },
+      makeEvening('wed'),
+    ]
+  },
+  {
+    id: 'thu',
+    cssClass: 'day-thu',
+    dayIndex: 4,
+    label: '木', labelEn: 'THU',
+    title: '木曜日',
+    subtitle: '英語',
+    sections: [
+      makeMorning('thu'),
+      {
+        label: '🌞 午前中',
+        items: [
+          { label: 'ベーシック国語 大問１・大問２',                 type: 'normal', stateKey: 'kokugo', itemIdx: 0 },
+          { label: 'ベーシック国語 文法・語句',                     type: 'normal', stateKey: 'kokugo', itemIdx: 1 },
+          { label: 'ベーシック国語 漢字・四字熟語/ことわざ/慣用句', type: 'normal', stateKey: 'kokugo', itemIdx: 2 },
+        ]
+      },
+      makeAfternoon('thu'),
+      makeEvening('thu'),
+    ]
+  },
+  {
+    id: 'fri',
+    cssClass: 'day-fri',
+    dayIndex: 5,
+    label: '金', labelEn: 'FRI',
+    title: '金曜日',
+    subtitle: 'ピアノ・公文',
+    sections: [
+      makeMorning('fri'),
+      {
+        label: '🌞 午前中',
+        items: [
+          { label: 'ベーシック算数 チャレンジ', type: 'normal', stateKey: 'sansu',             itemIdx: 5 },
+          { label: 'ベーシック国語 書き写し',   type: 'normal', stateKey: 'kokugo',            itemIdx: 3 },
+          { label: '都道府県',                  type: 'normal', stateKey: 'daily_fri_todofuken', itemIdx: 0 },
+        ]
+      },
+      makeAfternoon('fri'),
+      makeEvening('fri'),
+    ]
+  },
+  {
+    id: 'sat',
+    cssClass: 'day-sat',
+    dayIndex: 6,
+    label: '土', labelEn: 'SAT',
+    title: '土曜日',
+    subtitle: '希最レ',
+    sections: [
+      makeMorning('sat'),
+      {
+        label: '🌞 午前中',
+        items: [
+          { label: 'ベーシック国語 復習テスト', type: 'normal', stateKey: 'kokugo', itemIdx: 4 },
+          { label: '最レ算数 確認',              type: 'blue',   stateKey: 'saile',  itemIdx: 4 },
+          { label: 'ベーシック算数 解き直し',    type: 'red',    stateKey: 'sansu',  itemIdx: 3 },
+        ]
+      },
+      {
+        label: '🌙 午後',
+        items: [
+          { label: '最レ算数 基礎A',                          type: 'normal', stateKey: 'saile',  itemIdx: 0 },
+          { label: '最レ算数 応用B',                          type: 'normal', stateKey: 'saile',  itemIdx: 1 },
+          { label: '文法・語句 解き直し',                     type: 'red',    stateKey: 'kokugo', itemIdx: 5 },
+          { label: '漢字・四字熟語/ことわざ/慣用句 解き直し', type: 'red',    stateKey: 'kokugo', itemIdx: 6 },
+        ]
+      },
+      makeEvening('sat'),
+    ]
+  },
+  {
+    id: 'sun',
+    cssClass: 'day-sun',
+    dayIndex: 0,
+    label: '日', labelEn: 'SUN',
+    title: '日曜日',
+    subtitle: '',
+    sections: [
+      makeMorning('sun'),
+      {
+        label: '🌞 午前中',
+        items: [
+          { label: '最レ算数 応用C', type: 'normal', stateKey: 'saile',          itemIdx: 2 },
+          { label: '週末日記',       type: 'normal', stateKey: 'daily_sun_nikki', itemIdx: 0 },
+        ]
+      },
+      makeAfternoon('sun'),
+      makeEvening('sun'),
+    ]
+  },
+];
+
+// カテゴリのリセット設定
+const CAT_RESET = {
+  kokugo:   { day: 3, hour: 18 },
+  sansu:    { day: 3, hour: 18 },
+  saile:    { day: 6, hour: 18 },
+  eigo:     { day: 4, hour: 18 },
+};
+
+// カテゴリごとのアイテム数
+const CAT_ITEM_COUNT = {
+  kokugo: 8, sansu: 6, saile: 5, eigo: 4,
+};
+
+// 毎日系（曜日別独立）の全stateKey一覧
+const DAILY_STATE_KEYS = [];
+['mon','tue','wed','thu','fri','sat','sun'].forEach(dayId => {
+  DAILY_KEYS.forEach(dk => DAILY_STATE_KEYS.push(`daily_${dayId}_${dk}`));
+});
+DAILY_STATE_KEYS.push('daily_sun_nikki'); // 週末日記（日曜のみ・月曜00:00リセット）
+
+// 夏期講習期間（7/29〜8/4）セクション定義
+const SUMMER_SECTIONS = [
+  {
+    label: '☀️ 毎朝',
+    items: [
+      { label: '日々計算',               type: 'normal', stateKey: 'summer_keisan',   itemIdx: 0 },
+      { label: '語彙力UP 1300',         type: 'normal', stateKey: 'summer_goi',      itemIdx: 0 },
+      { label: 'タブレットでAnkiをやる', type: 'normal', stateKey: 'summer_anki',     itemIdx: 0 },
+    ]
+  },
+  {
+    label: '🌞 午前中',
+    items: [
+      { label: '昨日の夏期講習の解き直し', type: 'normal', stateKey: 'summer_kainaoshi', itemIdx: 0 },
+      { label: '希学園の夏期講習',         type: 'normal', stateKey: 'summer_juku',      itemIdx: 0 },
+    ]
+  },
+  {
+    label: '🌙 午後',
+    items: [
+      { label: '今日の宿題',                         type: 'normal', stateKey: 'summer_shukudai', itemIdx: 0 },
+      { label: '漢字トレーニング',                   type: 'normal', stateKey: 'summer_kanji',    itemIdx: 0 },
+      { label: '国語読解力トレーニング／どんぐり先生', type: 'normal', stateKey: 'summer_dokkai',  itemIdx: 0 },
+    ]
+  },
+  {
+    label: '🌼 毎日',
+    items: [
+      { label: 'ピアノ', type: 'normal', stateKey: 'summer_piano',   itemIdx: 0 },
+      { label: '公文',   type: 'normal', stateKey: 'summer_kumon',   itemIdx: 0 },
+      { label: '読書',   type: 'normal', stateKey: 'summer_dokusho', itemIdx: 0 },
+    ]
+  },
+];
+const SUMMER_STATE_KEYS = SUMMER_SECTIONS.flatMap(sec => sec.items.map(item => item.stateKey));
+
+
+// ===================================================
+// STATE
+// ===================================================
+function getFirebaseKey(key) { return `natsu_2026_${key}`; }
+
+function getLastResetTs(resetCfg, now) {
+  const d = new Date(now);
+  for (let i = 0; i <= 7; i++) {
+    const c = new Date(d);
+    c.setDate(d.getDate() - i);
+    c.setHours(resetCfg.hour, 0, 0, 0);
+    if (c <= d && c.getDay() === resetCfg.day) return c.getTime();
+  }
+  return 0;
+}
+
+// 毎日リセット（時刻のみ指定）: 25:00 = 翌日01:00
+function getLastDailyResetTs(hour, now) {
+  const d = new Date(now);
+  for (let i = 0; i <= 1; i++) {
+    const c = new Date(d);
+    c.setDate(d.getDate() - i);
+    c.setHours(hour, 0, 0, 0);
+    if (c <= d) return c.getTime();
+  }
+  return 0;
+}
+
+const catStates = {};
+
+// ユーザーが操作したキーと時刻を記録（先祖返り防止用）
+const localChangeTimes = {};
+const LOCAL_GRACE_MS = 5000; // 操作後5秒間はFirebaseからの上書きをブロック
+
+function saveCatState(key, st) {
+  set(ref(db, `checklist/${getFirebaseKey(key)}`), st)
+    .catch(e => console.error('Firebase save error:', e));
+}
+
+// Firebase から受け取ったデータにリセット処理を適用して catStates を更新
+// バッチ書き込みで onValue の連鎖を最小化
+function applyResets(firebaseData) {
+  const now = Date.now();
+  const data = firebaseData || {};
+  const batchUpdate = {}; // リセットが必要なキーをまとめて書き込む
+
+  // カテゴリ系
+  Object.keys(CAT_RESET).forEach(catId => {
+    const fbKey = getFirebaseKey(catId);
+    let st = data[fbKey];
+    if (!st || !Array.isArray(st.checked)) {
+      st = { checked: Array(CAT_ITEM_COUNT[catId]).fill(false), lastResetTs: 0 };
+    }
+    const expectedReset = getLastResetTs(CAT_RESET[catId], now);
+    if (expectedReset > (st.lastResetTs || 0)) {
+      // リセット必要 → 強制上書き
+      st = { checked: Array(CAT_ITEM_COUNT[catId]).fill(false), lastResetTs: expectedReset };
+      batchUpdate[fbKey] = st;
+    } else {
+      // リセット不要 → ユーザー操作直後はFirebase上書きをスキップ
+      const recentChange = localChangeTimes[catId] && (now - localChangeTimes[catId] < LOCAL_GRACE_MS);
+      if (recentChange) return; // catStates はローカルの値を維持
+    }
+    catStates[catId] = st;
+  });
+
+  // 毎日系（曜日別独立）
+  DAILY_STATE_KEYS.forEach(key => {
+    const fbKey = getFirebaseKey(key);
+    let st = data[fbKey];
+    if (!st || !Array.isArray(st.checked)) {
+      st = { checked: [false], lastResetTs: 0 };
+    }
+    const expectedReset = getLastResetTs(DAILY_RESET, now);
+    if (expectedReset > (st.lastResetTs || 0)) {
+      st = { checked: [false], lastResetTs: expectedReset };
+      batchUpdate[fbKey] = st;
+    } else {
+      const recentChange = localChangeTimes[key] && (now - localChangeTimes[key] < LOCAL_GRACE_MS);
+      if (recentChange) return;
+    }
+    catStates[key] = st;
+  });
+
+  // 夏期講習キー（毎日25:00 = 翌日01:00リセット）
+  SUMMER_STATE_KEYS.forEach(key => {
+    const fbKey = getFirebaseKey(key);
+    let st = data[fbKey];
+    if (!st || !Array.isArray(st.checked)) {
+      st = { checked: [false], lastResetTs: 0 };
+    }
+    const expectedReset = getLastDailyResetTs(1, now);
+    if (expectedReset > (st.lastResetTs || 0)) {
+      st = { checked: [false], lastResetTs: expectedReset };
+      batchUpdate[fbKey] = st;
+    } else {
+      const recentChange = localChangeTimes[key] && (now - localChangeTimes[key] < LOCAL_GRACE_MS);
+      if (recentChange) return;
+    }
+    catStates[key] = st;
+  });
+
+  // リセットが必要なキーをまとめて1回で書き込む（onValue の連鎖を抑制）
+  if (Object.keys(batchUpdate).length > 0) {
+    update(checklistRef, batchUpdate).catch(e => console.error('Firebase batch update error:', e));
+  }
+}
+
+function isChecked(stateKey, itemIdx) {
+  return catStates[stateKey]?.checked[itemIdx] ?? false;
+}
+
+function setChecked(stateKey, itemIdx, val) {
+  localChangeTimes[stateKey] = Date.now(); // ローカル操作を記録
+  if (!catStates[stateKey]) catStates[stateKey] = { checked: [false], lastResetTs: 0 };
+  catStates[stateKey].checked[itemIdx] = val;
+  saveCatState(stateKey, catStates[stateKey]);
+}
+
+// ===================================================
+// BUILD UI
+// ===================================================
+function itemRowHTML(item, rowId) {
+  const checked = isChecked(item.stateKey, item.itemIdx);
+  const checkedClass = checked ? ' checked' : '';
+  const badgeHTML = item.type === 'red'
+    ? `<span class="item-type-badge badge-red">🔴 解き直し</span>`
+    : item.type === 'blue'
+    ? `<span class="item-type-badge badge-blue">🔵 最終確認</span>`
+    : '';
+  const labelClass = item.type === 'red' ? 'item-label type-red'
+    : item.type === 'blue' ? 'item-label type-blue' : 'item-label';
+  return `
+    <div class="item-row${checkedClass}" id="${rowId}"
+         onclick="toggleWeekItem('${rowId}', '${item.stateKey}', ${item.itemIdx})">
+      <div class="custom-cb"><span class="check-icon">✓</span></div>
+      <span class="${labelClass}">${item.label}</span>
+      ${badgeHTML}
+    </div>`;
+}
+
+function buildDays() {
+  const container = document.getElementById('daysContainer');
+  const todayIdx = new Date().getDay();
+  container.innerHTML = '';
+
+  DAYS.forEach(day => {
+    const isToday = day.dayIndex === todayIdx;
+    const section = document.createElement('div');
+    section.className = `day-section ${day.cssClass}${isToday ? ' today' : ''}`;
+    section.id = `day-${day.id}`;
+
+    const todayTag = isToday ? `<span class="today-tag">TODAY</span>` : '';
+    const subtitleHTML = day.subtitle ? `<div class="day-subtitle">${day.subtitle}</div>` : '';
+    const total = day.sections.reduce((a, s) => a + s.items.length, 0);
+
+    let itemsHTML = '';
+    day.sections.forEach((sec, si) => {
+      if (sec.label) {
+        itemsHTML += `<div class="sub-section-label">${sec.label}</div>`;
+      }
+      sec.items.forEach((item, ii) => {
+        const rowId = `row-${day.id}-${si}-${ii}`;
+        itemsHTML += itemRowHTML(item, rowId);
+      });
+    });
+
+    section.innerHTML = `
+      <div class="day-header" onclick="toggleDay('${day.id}')">
+        <div class="day-badge">
+          <span class="day-jp">${day.label}</span>
+          <span class="day-sub">${day.labelEn}</span>
+        </div>
+        <div class="day-title-wrap">
+          <h2>${day.title}</h2>
+          ${subtitleHTML}
+        </div>
+        ${todayTag}
+        <span class="day-done-badge" id="done-${day.id}">✓ 完了</span>
+        <span class="day-progress-mini" id="mini-day-${day.id}">0/${total}</span>
+        <span class="day-chevron">▼</span>
+      </div>
+      <div class="day-items" id="items-${day.id}">
+        ${itemsHTML}
+      </div>`;
+
+    // 今日以外は最初から折りたたむ
+    if (!isToday) section.classList.add('collapsed');
+
+    container.appendChild(section);
+  });
+}
+
+// ===================================================
+// TOGGLE
+// ===================================================
+function toggleDay(dayId) {
+  document.getElementById(`day-${dayId}`).classList.toggle('collapsed');
+}
+
+function toggleWeekItem(rowId, stateKey, itemIdx) {
+  const cur = isChecked(stateKey, itemIdx);
+  setChecked(stateKey, itemIdx, !cur);
+  const row = document.getElementById(rowId);
+  if (!cur) { row.classList.add('checked'); spawnConfetti(); }
+  else row.classList.remove('checked');
+  updateDayProgress();
+  updateOverall();
+}
+
+// type="module" 内では onclick="..." からグローバル関数が呼べないため公開
+window.toggleWeekItem = toggleWeekItem;
+window.toggleDay = toggleDay;
+window.toggleSummerCard = function() {
+  document.getElementById('summerCard').classList.toggle('collapsed');
+};
+
+// ===================================================
+// PROGRESS
+// ===================================================
+function updateDayProgress() {
+  DAYS.forEach(day => {
+    let total = 0, done = 0;
+    day.sections.forEach(sec => {
+      sec.items.forEach(item => {
+        total++;
+        if (isChecked(item.stateKey, item.itemIdx)) done++;
+      });
+    });
+    document.getElementById(`mini-day-${day.id}`).textContent = `${done}/${total}`;
+    const el = document.getElementById(`day-${day.id}`);
+    if (done === total) el.classList.add('all-done');
+    else el.classList.remove('all-done');
+  });
+}
+
+function updateOverall() {
+  const todayIdx = new Date().getDay();
+  const todayDay = DAYS.find(d => d.dayIndex === todayIdx);
+  let total = 0, done = 0;
+  if (todayDay) {
+    todayDay.sections.forEach(sec => {
+      sec.items.forEach(item => {
+        total++;
+        if (isChecked(item.stateKey, item.itemIdx)) done++;
+      });
+    });
+  }
+  document.getElementById('overallBar').style.width = total ? `${(done/total*100).toFixed(1)}%` : '0%';
+  document.getElementById('overallCount').textContent = `${done} / ${total}`;
+}
+
+// ===================================================
+// AUTO RESET（1分ごとにリセット期限をチェック）
+// ===================================================
+function checkResets() {
+  const now = Date.now();
+  let needsRebuild = false;
+  const batchUpdate = {};
+
+  Object.keys(CAT_RESET).forEach(catId => {
+    const st = catStates[catId];
+    if (!st) return;
+    const expected = getLastResetTs(CAT_RESET[catId], now);
+    if (expected > (st.lastResetTs || 0)) {
+      catStates[catId] = { checked: Array(CAT_ITEM_COUNT[catId]).fill(false), lastResetTs: expected };
+      batchUpdate[getFirebaseKey(catId)] = catStates[catId];
+      needsRebuild = true;
+    }
+  });
+  DAILY_STATE_KEYS.forEach(key => {
+    const st = catStates[key] || { checked: [false], lastResetTs: 0 };
+    const expected = getLastResetTs(DAILY_RESET, now);
+    if (expected > (st.lastResetTs || 0)) {
+      catStates[key] = { checked: [false], lastResetTs: expected };
+      batchUpdate[getFirebaseKey(key)] = catStates[key];
+      needsRebuild = true;
+    }
+  });
+  SUMMER_STATE_KEYS.forEach(key => {
+    const st = catStates[key] || { checked: [false], lastResetTs: 0 };
+    const expected = getLastDailyResetTs(1, now);
+    if (expected > (st.lastResetTs || 0)) {
+      catStates[key] = { checked: [false], lastResetTs: expected };
+      batchUpdate[getFirebaseKey(key)] = catStates[key];
+      needsRebuild = true;
+    }
+  });
+
+  if (Object.keys(batchUpdate).length > 0) {
+    update(checklistRef, batchUpdate).catch(e => console.error(e));
+  }
+  if (needsRebuild) {
+    rebuildAllRows();
+    updateDayProgress();
+    updateOverall();
+  }
+}
+
+function buildSummerCard() {
+  const body = document.getElementById('summerCardBody');
+  let html = '';
+  SUMMER_SECTIONS.forEach((sec, si) => {
+    html += `<div class="sub-section-label">${sec.label}</div>`;
+    sec.items.forEach((item, ii) => {
+      const rowId = `summer-row-${si}-${ii}`;
+      html += itemRowHTML(item, rowId);
+    });
+  });
+  body.innerHTML = html;
+}
+
+function rebuildSummerRows() {
+  SUMMER_SECTIONS.forEach((sec, si) => {
+    sec.items.forEach((item, ii) => {
+      const row = document.getElementById(`summer-row-${si}-${ii}`);
+      if (row) isChecked(item.stateKey, item.itemIdx) ? row.classList.add('checked') : row.classList.remove('checked');
+    });
+  });
+}
+
+function rebuildAllRows() {
+  DAYS.forEach(day => {
+    day.sections.forEach((sec, si) => {
+      sec.items.forEach((item, ii) => {
+        const row = document.getElementById(`row-${day.id}-${si}-${ii}`);
+        if (row) isChecked(item.stateKey, item.itemIdx) ? row.classList.add('checked') : row.classList.remove('checked');
+      });
+    });
+  });
+  rebuildSummerRows();
+}
+
+// ===================================================
+// CONFETTI & DATE
+// ===================================================
+function spawnConfetti() {
+  const emojis = ['⭐','✨','🎉','💫','🌟','🎊'];
+  for (let i = 0; i < 5; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = (20 + Math.random() * 60) + 'vw';
+    el.style.top = (Math.random() * 40 + 20) + 'vh';
+    el.style.animationDelay = (Math.random() * 0.4) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1600);
+  }
+}
+
+function updateDate() {
+  const now = new Date();
+  const days = ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'];
+  document.getElementById('dateDisplay').textContent =
+    `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${days[now.getDay()]}`;
+}
+
+// ===================================================
+// INIT
+// ===================================================
+updateDate();
+setInterval(checkResets, 60000);
+setInterval(updateDate, 60000);
+
+// Firebase リアルタイム同期
+// onValue: 初回データ取得 + 他デバイスからの変更を検知
+let uiBuilt = false;
+onValue(checklistRef, snapshot => {
+  applyResets(snapshot.val()); // リセット処理 + catStates 更新
+  if (!uiBuilt) {
+    buildDays();       // 初回のみDOM構築
+    buildSummerCard(); // 夏期講習カード構築
+    uiBuilt = true;
+  } else {
+    rebuildAllRows(); // 他デバイスからの変更をUIに反映
+  }
+  updateDayProgress();
+  updateOverall();
+}, error => {
+  // Firebase接続失敗時もUIは表示する
+  console.error('Firebase onValue error:', error);
+  if (!uiBuilt) {
+    buildDays();
+    uiBuilt = true;
+    updateDayProgress();
+    updateOverall();
+  }
+});
+</script>
+</body>
+</html>
