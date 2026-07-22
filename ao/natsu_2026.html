@@ -567,7 +567,7 @@ const checklistRef = ref(db, 'checklist');
 // DATA
 // ===================================================
 
-const DAILY_KEYS = ['piano', 'keisan', 'goi', 'kumon', 'anki', 'dokusho', 'kanji_tr', 'donguri', 'dokkai', 'todofuken', 'rekishi'];
+const DAILY_KEYS = ['piano', 'keisan', 'goi', 'kumon', 'anki', 'dokusho', 'kanji_tr', 'donguri', 'dokkai', 'todofuken', 'rekishi', 'dotou'];
 const DAILY_RESET = { day: 1, hour: 0 }; // 月曜00:00
 
 function makeMorning(dayId) {
@@ -598,6 +598,7 @@ function makeEvening(dayId) {
       { label: '公文',                       type: 'normal', stateKey: `daily_${dayId}_kumon`,   itemIdx: 0 },
       { label: '読書',                       type: 'normal', stateKey: `daily_${dayId}_dokusho`, itemIdx: 0 },
       { label: '歴史人物のシール（3人はる）', type: 'normal', stateKey: `daily_${dayId}_rekishi`, itemIdx: 0 },
+      { label: '怒涛の計算',                 type: 'normal', stateKey: `daily_${dayId}_dotou`,   itemIdx: 0 },
     ]
   };
 }
@@ -822,6 +823,7 @@ const SUMMER_SECTIONS = [
       { label: '公文',                       type: 'normal', stateKey: 'summer_kumon',   itemIdx: 0 },
       { label: '読書',                       type: 'normal', stateKey: 'summer_dokusho', itemIdx: 0 },
       { label: '歴史人物のシール（3人はる）', type: 'normal', stateKey: 'summer_rekishi', itemIdx: 0 },
+      { label: '怒涛の計算',                 type: 'normal', stateKey: 'summer_dotou',   itemIdx: 0 },
     ]
   },
 ];
